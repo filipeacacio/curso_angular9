@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiBaseURL: 'https://run.mocky.io',
+  apiBaseURLBeeceptor: 'https://fa-teste.free.beeceptor.com'
 };
 
 /*

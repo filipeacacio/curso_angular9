@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Cliente } from './clientes/cliente';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientesService {
 
+  apiURL: string = environment.apiBaseURL;
+  apiURLBeeceptor: string = environment.apiBaseURLBeeceptor;
   lef retorno: Observable;
 
   constructor(private http: HttpClient) {}
@@ -17,22 +19,22 @@ export class ClientesService {
 
     if ( true ) {
       // 200
-      this.retorno = this.http.post<Cliente>('https://run.mocky.io/v3/2725fcff-ebf8-489b-9c52-f775f353fa32', cliente);
+      this.retorno = this.http.post<Cliente>(this.apiURL + '/v3/2725fcff-ebf8-489b-9c52-f775f353fa32', cliente);
     } else {
       // 400
-      this.retorno =  this.http.post<Cliente>('https://run.mocky.io/v3/a9480ff9-8304-47cf-9cef-b13e60f5ed4f', cliente);
+      this.retorno =  this.http.post<Cliente>(this.apiURL + '/v3/a9480ff9-8304-47cf-9cef-b13e60f5ed4f', cliente);
     }
 
     return this.retorno;
   }
 
   atualizar(cliente: Cliente): Observable<any> {
-    this.retorno = this.http.post<Cliente>(`https://run.mocky.io/v3/2725fcff-ebf8-489b-9c52-f775f353fa32/${cliente.id}`, cliente);
+    this.retorno = this.http.post<Cliente>(this.apiURL + `/v3/2725fcff-ebf8-489b-9c52-f775f353fa32/${cliente.id}`, cliente);
     return this.retorno;
   }
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>('https://run.mocky.io/v3/20ea7e9a-e471-4c81-95ff-18f4c675c76d');
+    return this.http.get<Cliente[]>(this.apiURL + '/v3/20ea7e9a-e471-4c81-95ff-18f4c675c76d');
   }
 
   getClientesLocal(): Cliente[] {
@@ -53,12 +55,12 @@ export class ClientesService {
 
   getClienteById(id: number): Observable<Cliente> {
     console.log('id passado na URL: ' + id);
-    return this.http.get<any>(`https://run.mocky.io/v3/2725fcff-ebf8-489b-9c52-f775f353fa32/${id}`);
+    return this.http.get<any>(`${this.apiURL}/v3/2725fcff-ebf8-489b-9c52-f775f353fa32/${id}`);
   }
 
   deletar(id: number): Observable<any> {
     console.log('id passado na URL para deletar: ' + id);
-    return this.http.delete<any>(`https://fa-teste.free.beeceptor.com/deletar-cliente/${id}`);
+    return this.http.delete<any>(`${this.apiURLBeeceptor}/deletar-cliente/${id}`);
     //return null;
   }
 
